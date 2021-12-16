@@ -1,3 +1,4 @@
+def BRANCH_NAME == 'master'
 pipeline {
   parameters { // {
     string(
