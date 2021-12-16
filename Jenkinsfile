@@ -57,7 +57,9 @@ pipeline {
       choices: ['utf8'] as List
     )
   } // }
-agent any
+  agent {
+    label 'slave1'
+  }
   options {
     skipDefaultCheckout()
     buildDiscarder(logRotator(
