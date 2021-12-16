@@ -70,6 +70,8 @@ agent any
 	          steps {
             script {
               scmInfo = checkout scm
+			  f = fileExists 'README.md'
+			  echo "f=${f}"
             }
           }
 	}
