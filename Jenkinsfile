@@ -57,7 +57,7 @@ pipeline {
       choices: ['utf8'] as List
     )
   } // }
-  agent none
+
   options {
     skipDefaultCheckout()
     buildDiscarder(logRotator(
