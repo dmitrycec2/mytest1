@@ -34,8 +34,9 @@ pipeline {
                    label 'slave1'
                 }
 				steps {
-				if(P_SLAVE1.toString()!='NULL'){
+				
 					script {
+					if(P_SLAVE1.toString()!='NULL'){
 					  scmInfo = checkout scm
 					  f = fileExists 'README.md'
 					  echo "f=${f}"
@@ -45,7 +46,8 @@ pipeline {
 					  sh 'chmod +x entrypoint.sh'
 					  sh './test.sh ${P_TEST_MODE}'
 					}
-				}
+					}
+				
 				}
 			}
 		}	
