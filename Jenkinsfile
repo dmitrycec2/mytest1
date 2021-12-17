@@ -18,7 +18,10 @@ pipeline {
   }
   stages {
     stage('Build On slave1') {
-	if(P_SLAVE1.toString()!='NULL'){
+
+	when {
+        P_SLAVE1.toString()!='NULL'
+    }
 		agent {
             label 'slave1'
         }
@@ -34,7 +37,7 @@ pipeline {
 			}
 		
 		}
-	}
+	
 	}
     stage('Tests') {
 		parallel {
