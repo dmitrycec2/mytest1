@@ -74,6 +74,11 @@ pipeline {
               scmInfo = checkout scm
 			  f = fileExists 'README.md'
 			  echo "f=${f}"
+			  sh 'chmod +x test.sh'
+			  sh 'chmod +x run.sh'
+			  sh 'chmod +x build.sh'
+			  sh 'chmod +x entrypoint.sh'
+			  sh "./test.sh '${P_TEST_MODE}'
             }
           }
 	}
