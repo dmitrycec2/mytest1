@@ -6,7 +6,12 @@ pipeline {
       description: '',
       choices: ['NULL', 'UC_251_NEWFILE_run'] as List
     )
-
+    choice(
+      name: 'P_SLAVE2',
+      description: '',
+      choices: ['NULL', 'UC_251_NEWFILE_run'] as List
+    )
+	
   } // }
   agent none
   options {
@@ -18,12 +23,10 @@ pipeline {
   }
   stages {
     stage('Build On slave1') {
-
 	when {
 	    expression {
             return P_SLAVE1.toString()!='NULL';
-        }
-        
+        }        
     }
 		agent {
             label 'slave1'
@@ -45,19 +48,30 @@ pipeline {
     stage('Tests') {
 		parallel {
 			stage('Test On slave1') {
+				when {
+					expression {
+						return P_SLAVE1.toString()!='NULL';
+					}        
+				}
 			    agent {
                    label 'slave1'
                 }
 				steps {				
-					script {					
-						if(P_SLAVE1.toString()!='NULL'){			  
+					script {				
+			  
 						  sh './test.sh ${P_TEST_MODE}'
-						}
+						
 					}
 				
 				}
 			}
-						stage('Test On slave2') {
+			
+			stage('Test On slave2') {
+				when {
+					expression {
+						return P_SLAVE2.toString()!='NULL';
+					}        
+				}
 			    agent {
                    label 'slave2'
                 }
@@ -70,6 +84,8 @@ pipeline {
 				
 				}
 			}
+			
+			
 		}	
 	}
   }
