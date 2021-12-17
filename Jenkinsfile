@@ -36,9 +36,9 @@ pipeline {
 				steps {
 				
 					script {
-					scmInfo = checkout scm
+					
 					if(P_SLAVE1.toString()!='NULL'){
-					  
+					  scmInfo = checkout scm
 					  f = fileExists 'README.md'
 					  echo "f=${f}"
 					  sh 'chmod +x test.sh'
