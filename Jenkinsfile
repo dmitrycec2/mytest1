@@ -27,23 +27,29 @@ pipeline {
     ))
   }
   stages {
-    stage('Test') {
-	  agent {
-    label 'slave1'
+    stage('Tests') {
+		parallel {
+			stage('Test On slave1') {
+			    agent {
+                   label 'slave1'
+                }
+				steps {
+				if(P_SLAVE1.toString()!='NULL'){
+					script {
+					  scmInfo = checkout scm
+					  f = fileExists 'README.md'
+					  echo "f=${f}"
+					  sh 'chmod +x test.sh'
+					  sh 'chmod +x run.sh'
+					  sh 'chmod +x build.sh'
+					  sh 'chmod +x entrypoint.sh'
+					  sh './test.sh ${P_TEST_MODE}'
+					}
+				}
+				}
+			}
+		}	
+	}
   }
-	          steps {
-            script {
-              scmInfo = checkout scm
-			  f = fileExists 'README.md'
-			  echo "f=${f}"
-			  sh 'chmod +x test.sh'
-			  sh 'chmod +x run.sh'
-			  sh 'chmod +x build.sh'
-			  sh 'chmod +x entrypoint.sh'
-			  sh './test.sh ${P_TEST_MODE}'
-            }
-          }
-	}
-	}
  
 }
