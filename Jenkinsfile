@@ -49,7 +49,7 @@ pipeline {
     choice(
       name: 'P_TEST_MODE',
       description: '',
-      choices: ['ft_beck_end_P1', 'maximum_load_P1'] as List
+      choices: ['UC_251_NEWFILE_run', 'UC_251_NEWFILE_run'] as List
     )
     choice(
       name: 'P_ENCODING',
