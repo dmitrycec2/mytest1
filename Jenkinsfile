@@ -1,22 +1,12 @@
 def BRANCH_NAME = 'main'
 pipeline {
   parameters { // {
-    string(
-      name: 'P_GIT_BRANCH',
-      description: '',
-      defaultValue: 'main'
-    )
-
     choice(
       name: 'P_SLAVE1',
       description: '',
       choices: ['NULL', 'UC_251_NEWFILE_run'] as List
     )
-    choice(
-      name: 'P_ENCODING',
-      description: '',
-      choices: ['utf8'] as List
-    )
+
   } // }
   agent none
   options {
@@ -27,7 +17,8 @@ pipeline {
     ))
   }
   stages {
-    stage('Build') {
+    stage('Build On slave1') {
+	if(P_SLAVE1.toString()!='NULL'){
 		agent {
             label 'slave1'
         }
@@ -44,11 +35,25 @@ pipeline {
 		
 		}
 	}
+	}
     stage('Tests') {
 		parallel {
 			stage('Test On slave1') {
 			    agent {
                    label 'slave1'
+                }
+				steps {				
+					script {					
+						if(P_SLAVE1.toString()!='NULL'){			  
+						  sh './test.sh ${P_TEST_MODE}'
+						}
+					}
+				
+				}
+			}
+						stage('Test On slave2') {
+			    agent {
+                   label 'slave2'
                 }
 				steps {				
 					script {					
