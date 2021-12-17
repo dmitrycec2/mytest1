@@ -45,7 +45,7 @@ pipeline {
 		}
 	
 	}
-	/*stage('Build On slave2') {
+	stage('Build On slave2') {
 	when {
 	    expression {
             return P_SLAVE2.toString()!='NULL';
@@ -67,7 +67,7 @@ pipeline {
 		
 		}
 	
-	}*/
+	}
 	
 	
     stage('Tests') {
@@ -91,7 +91,7 @@ pipeline {
 				}
 			}
 			
-			/*stage('Test On slave2') {
+			stage('Test On slave2') {
 				when {
 					expression {
 						return P_SLAVE2.toString()!='NULL';
@@ -108,7 +108,7 @@ pipeline {
 					}
 				
 				}
-			}*/
+			}
 			
 			
 		}	
