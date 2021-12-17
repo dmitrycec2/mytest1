@@ -2,54 +2,15 @@ def BRANCH_NAME = 'main'
 pipeline {
   parameters { // {
     string(
-      name: 'P_DOCKER_TAG',
+      name: 'P_GIT_BRANCH',
       description: '',
-      defaultValue: 'feature_dev'
+      defaultValue: 'main'
     )
-    string(
-      name: 'P_PORT',
-      description: 'порт',
-      defaultValue: '80'
-    )
-    string(
-      name: 'P_HOST',
-      description: 'хост',
-      defaultValue: 'dev.planeta.ibs'
-    )
-    string(
-      name: 'P_SCHEME',
-      description: 'протокол',
-      defaultValue: 'http'
-    )
-    string(
-      name: 'P_DURATION',
-      description: 'продолжительность теста, секунды',
-      defaultValue: '600'
-    )
-    string(
-      name: 'P_THREADGROUP',
-      description: 'количество пользователей',
-      defaultValue: '1'
-    )
-    string(
-      name: 'P_RAMPUPPERIOD',
-      description: 'время выхода пользователей',
-      defaultValue: '1'
-    )
-    string(
-      name: 'P_LOOPCOUNT',
-      description: 'количество повторов',
-      defaultValue: '-1'
-    )
-    string(
-      name: 'P_IS_PACINGON',
-      description: 'Включить ожидание пользователей после выполнения скрипта',
-      defaultValue: 'выключить'
-    )
+
     choice(
-      name: 'P_TEST_MODE',
+      name: 'P_SLAVE1',
       description: '',
-      choices: ['UC_251_NEWFILE_run', 'UC_251_NEWFILE_run'] as List
+      choices: ['NULL', 'UC_251_NEWFILE_run'] as List
     )
     choice(
       name: 'P_ENCODING',
@@ -57,9 +18,7 @@ pipeline {
       choices: ['utf8'] as List
     )
   } // }
-  agent {
-    label 'slave1'
-  }
+  agent none
   options {
     skipDefaultCheckout()
     buildDiscarder(logRotator(
@@ -68,7 +27,10 @@ pipeline {
     ))
   }
   stages {
-    stage('Build') {
+    stage('Test') {
+	  agent {
+    label 'slave1'
+  }
 	          steps {
             script {
               scmInfo = checkout scm
