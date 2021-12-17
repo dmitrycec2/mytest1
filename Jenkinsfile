@@ -84,7 +84,7 @@ pipeline {
 				steps {				
 					script {				
 			  
-						  sh './test.sh ${P_TEST_MODE}'
+						  sh './test.sh ${P_SLAVE1}'
 						
 					}
 				
@@ -103,7 +103,7 @@ pipeline {
 				steps {				
 					script {					
 						if(P_SLAVE1.toString()!='NULL'){			  
-						  sh './test.sh ${P_TEST_MODE}'
+						  sh './test.sh ${P_SLAVE2}'
 						}
 					}
 				
