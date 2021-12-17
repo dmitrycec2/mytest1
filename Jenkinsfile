@@ -78,7 +78,7 @@ pipeline {
 			  sh 'chmod +x run.sh'
 			  sh 'chmod +x build.sh'
 			  sh 'chmod +x entrypoint.sh'
-			  sh "./test.sh '${P_TEST_MODE}'
+			  sh './test.sh ${P_TEST_MODE}'
             }
           }
 	}
