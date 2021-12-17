@@ -20,7 +20,10 @@ pipeline {
     stage('Build On slave1') {
 
 	when {
-        P_SLAVE1.toString()!='NULL'
+	    expression {
+            return P_SLAVE1.toString()!='NULL';
+        }
+        
     }
 		agent {
             label 'slave1'
