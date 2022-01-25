@@ -24,6 +24,7 @@ pipeline {
   stages {
     stage('Build On slave1') {
 	when {
+		beforeAgent true;
 	    expression {
             return P_SLAVE1.toString()!='NULL';
         }        
@@ -47,6 +48,7 @@ pipeline {
 	}
 	stage('Build On slave2') {
 	when {
+		beforeAgent true;
 	    expression {
             return P_SLAVE2.toString()!='NULL';
         }        
@@ -74,6 +76,7 @@ pipeline {
 		parallel {
 			stage('Test On slave1') {
 				when {
+					beforeAgent true;
 					expression {
 						return P_SLAVE1.toString()!='NULL';
 					}        
@@ -93,6 +96,7 @@ pipeline {
 			
 			stage('Test On slave2') {
 				when {
+					beforeAgent true;
 					expression {
 						return P_SLAVE2.toString()!='NULL';
 					}        
